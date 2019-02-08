@@ -1,0 +1,22 @@
+
+# Profile specific configurations
+---
+apigee:
+  env: test
+
+apiproxy:
+  name: template-v1
+
+northbound:
+  proxyEndpoint:
+    name: default
+    apiVersion: v1
+    basepath: /v1/template
+    virtualhost: secure
+
+
+southbound:
+  targetEndpoint:
+    name: template-v1
+    successCodes: 2XX
+    path: /

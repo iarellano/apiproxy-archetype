@@ -1,0 +1,8 @@
+---
+- name: ${apiproxy.name}-rev${apiproxy.revision}
+  entry:
+  - name: COMPANY
+    value: example.com
+  - name: PREFIX
+    value: EXMPL
+

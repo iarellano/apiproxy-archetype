@@ -1,0 +1,100 @@
+<archetype-descriptor name="basic" xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 https://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd">
+    <requiredProperties>
+        <requiredProperty key="dbHost">
+            <defaultValue>hola</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="apiproxy">
+            <defaultValue>${artifactId}</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="calloutPackage">
+            <defaultValue>${groupId}.${artifactId}</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="package">
+            <defaultValue>${groupId}.${artifactId}</defaultValue>
+        </requiredProperty>
+    </requiredProperties>
+
+    <fileSets>
+
+        <fileSet filtered="true" packaged="false">
+            <directory>misc</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true" packaged="false">
+            <directory>config</directory>
+            <includes>
+                <include>**/*.yaml</include>
+            </includes>
+        </fileSet>
+
+
+
+        <fileSet filtered="false" packaged="false">
+            <directory>lib</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true" packaged="false">
+            <directory>src/main/apiproxy</directory>
+            <includes>
+                <include>**/*.xml</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true" packaged="false">
+            <directory>src/test/apiproxy</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <excludes>
+                <exclude>**/test.jmx</exclude>
+                <exclude>**/testdata.csv</exclude>
+            </excludes>
+        </fileSet>
+
+        <fileSet filtered="false" packaged="false">
+            <directory>src/test/apiproxy</directory>
+            <includes>
+                <include>**/test.jmx</include>
+                <include>**/testdata.csv</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true" packaged="false">
+            <directory>src/main/callout</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+        </fileSet>
+
+        <!--<fileSet filtered="true" packaged="false">-->
+            <!--<directory>src/test</directory>-->
+            <!--<includes>-->
+                <!--<include>edge/**/*.*</include>-->
+            <!--</includes>-->
+        <!--</fileSet>-->
+
+        <!--<fileSet filtered="true" packaged="true">-->
+            <!--<directory>src/callout</directory>-->
+            <!--<includes>-->
+                <!--<include>**/*.java</include>-->
+                <!--<include>**/*.xml</include>-->
+            <!--</includes>-->
+        <!--</fileSet>-->
+
+
+        <!--<fileSet filtered="true" packaged="false">-->
+            <!--<directory>src/apiproxy</directory>-->
+            <!--<includes>-->
+                <!--<include>**/*.xml</include>-->
+            <!--</includes>-->
+        <!--</fileSet>-->
+
+    </fileSets>
+</archetype-descriptor>
