@@ -1,5 +1,12 @@
-# Profile specific configurations
-
+# Global prod profile configurations
 ---
 apigee:
   env: prod
+  org: ${prodOrganization}
+
+${apiproxyName}:
+  northbound:
+    domain: ${prodProxyDomain}
+    basePath: ${apiproxyBasePath}
+    protocol: ${prodProtocol}
+    virtualHost: ${prodProxyVirtualHost}

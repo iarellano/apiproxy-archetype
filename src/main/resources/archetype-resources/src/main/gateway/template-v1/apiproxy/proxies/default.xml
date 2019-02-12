@@ -32,8 +32,8 @@
     </PostFlow>
     <Flows/>
     <HTTPProxyConnection>
-        <BasePath>${northbound.proxyEndpoint.basepath}</BasePath>
-        <VirtualHost>${northbound.proxyEndpoint.virtualhost}</VirtualHost>
+        <BasePath>${northbound.basePath}${deployment.suffix}</BasePath>
+        <VirtualHost>${northbound.virtualHost}</VirtualHost>
     </HTTPProxyConnection>
     <RouteRule name="default">
         <TargetEndpoint>default</TargetEndpoint>

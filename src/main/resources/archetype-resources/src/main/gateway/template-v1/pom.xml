@@ -12,7 +12,7 @@
         <groupId>${groupId}</groupId>
         <artifactId>shared-pom</artifactId>
         <version>${version}</version>
-        <relativePath>../../../../shared-pom.xml</relativePath>
+        <relativePath>../shared-pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -22,9 +22,24 @@
         <apiproxy.basepath>${apiproxyBasepath}</apiproxy.basepath>
         <apiproxy.callout.package>${javaCalloutPackage}</apiproxy.callout.package>
 
-        <main.basedir>${project.parent.basedir}</main.basedir>
+        <main.basedir>${project.basedir}/../../../..</main.basedir>
         <main.outputDirectory>${main.basedir}/target/${apiproxy.name}</main.outputDirectory>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>test</id>
+            <properties>
+                <apigee.profile>test</apigee.profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <apigee.profile>prod</apigee.profile>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -49,48 +64,52 @@
                 </executions>
             </plugin>
 
-            <!--<plugin>-->
-                <!--<groupId>com.github.iarellano</groupId>-->
-                <!--<artifactId>iad-maven-invoker-maven-plugin</artifactId>-->
-                <!--<version>1.0.1</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>build-callout</id>-->
-                        <!--<phase>process-resources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>execute</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<baseDirectory>./callout</baseDirectory>-->
-                            <!--<pomFile>pom.xml</pomFile>-->
-                            <!--<properties>-->
-                                <!--<property>-->
-                                    <!--<name>main.basedir</name>-->
-                                    <!--<value>${main.basedir}</value>-->
-                                <!--</property>-->
-                                <!--<property>-->
-                                    <!--<name>apiproxy.name</name>-->
-                                    <!--<value>${apiproxy.name}</value>-->
-                                <!--</property>-->
-                                <!--<property>-->
-                                    <!--<name>apiproxy.revision</name>-->
-                                    <!--<value>${apiproxy.revision}</value>-->
-                                <!--</property>-->
-                                <!--<property>-->
-                                    <!--<name>main.outputDirectory</name>-->
-                                    <!--<value>${main.outputDirectory}</value>-->
-                                <!--</property>-->
-                            <!--</properties>-->
-                            <!--<goals>-->
-                                <!--<goal>clean</goal>-->
-                                <!--<goal>compile</goal>-->
-                                <!--<goal>test</goal>-->
-                                <!--<goal>package</goal>-->
-                            <!--</goals>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>com.github.iarellano</groupId>
+                <artifactId>iad-maven-invoker-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <id>build-callout</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <baseDirectory>./callout</baseDirectory>
+                            <pomFile>pom.xml</pomFile>
+                            <properties>
+                                <property>
+                                    <name>main.basedir</name>
+                                    <value>${main.basedir}</value>
+                                </property>
+                                <property>
+                                    <name>apiproxy.name</name>
+                                    <value>${apiproxy.name}</value>
+                                </property>
+                                <property>
+                                    <name>deployment.suffix</name>
+                                    <value>${deployment.suffix}</value>
+                                </property>
+                                <property>
+                                    <name>apiproxy.revision</name>
+                                    <value>${apiproxy.revision}</value>
+                                </property>
+                                <property>
+                                    <name>main.outputDirectory</name>
+                                    <value>${project.build.directory}</value>
+                                </property>
+                            </properties>
+                            <goals>
+                                <goal>clean</goal>
+                                <goal>compile</goal>
+                                <goal>test</goal>
+                                <goal>package</goal>
+                            </goals>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
 
 

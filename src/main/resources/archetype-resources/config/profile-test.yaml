@@ -1,5 +1,12 @@
-
-# Profile specific configurations
+# Global test profile configurations
 ---
 apigee:
   env: test
+  org: ${testOrganization}
+
+${apiproxyName}:
+  northbound:
+    domain: ${testProxyDomain}
+    basePath: ${apiproxyBasePath}
+    protocol: ${testProtocol}
+    virtualHost: ${testProxyVirtualHost}

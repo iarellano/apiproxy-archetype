@@ -1,3 +1,4 @@
+#set ( $d = "$" )
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="3.2" jmeter="3.3 r1808647">
   <hashTree>
@@ -15,10 +16,10 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${__P(loopCount,4)}</stringProp>
+          <stringProp name="LoopController.loops">${d}{__P(loopCount,4)}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(threads,1)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${__P(rampUpPeriodSecs,3)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${d}{__P(threads,1)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${d}{__P(rampUpPeriodSecs,3)}</stringProp>
         <longProp name="ThreadGroup.start_time">1384727829000</longProp>
         <longProp name="ThreadGroup.end_time">1384727829000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -29,9 +30,9 @@
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">${__P(testData,testdata.csv)}</stringProp>
+          <stringProp name="filename">${d}{__P(testData,testdata.csv)}</stringProp>
           <boolProp name="quotedData">false</boolProp>
-          <stringProp name="recycle">${__P(recycle,true)}</stringProp>
+          <stringProp name="recycle">${d}{__P(recycle,true)}</stringProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">true</boolProp>
           <stringProp name="variableNames"></stringProp>
@@ -50,7 +51,7 @@
               </elementProp>
               <elementProp name="scope" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">${scopes}</stringProp>
+                <stringProp name="Argument.value">${d}{scopes}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">scope</stringProp>
@@ -92,7 +93,7 @@
           <hashTree/>
         </hashTree>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
-          <stringProp name="IfController.condition">&quot;${execute}&quot; == &quot;Y&quot;</stringProp>
+          <stringProp name="IfController.condition">&quot;${d}{execute}&quot; == &quot;Y&quot;</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
         </IfController>
         <hashTree>
@@ -100,20 +101,20 @@
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Bearer ${access_token}</stringProp>
+                <stringProp name="Header.value">Bearer ${d}{access_token}</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${testcaseid} - ${testcasedescription} - ${userstory} API - ${env}" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${d}{testcaseid} - ${d}{testcasedescription} - ${d}{userstory} API - ${d}{env}" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">${servername}</stringProp>
+            <stringProp name="HTTPSampler.domain">${d}{servername}</stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">${path}</stringProp>
+            <stringProp name="HTTPSampler.path">${d}{path}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -127,7 +128,7 @@
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Header 200 OK Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-2005093869">${assertheader}</stringProp>
+              <stringProp name="-2005093869">${d}{assertheader}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_headers</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>
@@ -145,7 +146,7 @@
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Found Server Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1480431359">${assertcontent}</stringProp>
+              <stringProp name="-1480431359">${d}{assertcontent}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
@@ -154,7 +155,7 @@
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Negative Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1407312020">${assertcontentnegative}</stringProp>
+              <stringProp name="-1407312020">${d}{assertcontentnegative}</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>

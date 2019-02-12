@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Quota async="false" continueOnError="false" enabled="true" name="QA-Impose-Quota">
-    <DisplayName>QA-Impose-Quota</DisplayName>
+<Quota async="false" continueOnError="false" enabled="true" name="Quota-Impose-Quota">
+    <DisplayName>Quota: Impose Quota</DisplayName>
     <Allow countRef="verifyapikey.verify-api-key.apiproduct.developer.quota.limit" count="2000"/>
     <Interval ref="verifyapikey.verify-api-key.apiproduct.developer.quota.interval">1</Interval>
     <Distributed>true</Distributed>

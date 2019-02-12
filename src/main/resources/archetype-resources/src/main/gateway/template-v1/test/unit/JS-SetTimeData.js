@@ -1,11 +1,11 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 
-var moduleLoader = require('../common/moduleLoader.js');
-var mockFactory = require('../common/mockFactory.js');
-var json = require('../common/jsonComparer.js');
+var moduleLoader = require('./common/moduleLoader.js');
+var mockFactory = require('./common/mockFactory.js');
+var json = require('./common/jsonComparer.js');
 
-var js = '${main.outputDirectory}/apiproxy/resources/jsc/JS-Compute-Latency.js';
+var js = '${project.build.directory}/apiproxy/resources/jsc/JS-Compute-Latency.js';
 
 describe('feature: Compute latency time', function () {
 

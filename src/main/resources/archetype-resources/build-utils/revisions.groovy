@@ -27,12 +27,10 @@ class Request {
     }
 }
 
-
 def organization =  project.getProperties().get("apigee.org") as String
 def environment = project.getProperties().get("apigee.env") as String
 def api = project.getProperties().get("apiproxy.name") as String
-def mangmntUrl = (project.getProperties().get("apigee.hosturl") + "/"
-                    + project.getProperties().get("apigee.apiversion")) as String
+def mangmntUrl = project.getProperties().get("apigee.managementUrl") as String
 def username = project.getProperties().get("apigee.username") as String
 def password = project.getProperties().get("apigee.password") as String
 def properties = new Properties()

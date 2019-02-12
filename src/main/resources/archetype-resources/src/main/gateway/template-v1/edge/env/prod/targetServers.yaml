@@ -1,6 +1,5 @@
 ---
-
-- name: ${apiproxy.name}-rev${apiproxy.revision}
+- name: ${apiproxy.name}-rev${apiproxy.revision}${deployment.suffix}
   host: httpbin.org
   isEnabled: true
   port: 443

@@ -8,8 +8,8 @@
 
     <properties>
 
-        <main.basedir>${project.basedir}</main.basedir>
-        <main.outputDirectory>${main.basedir}/target/${apiproxy.name}</main.outputDirectory>
+        <main.basedir>${project.basedir}/../../..</main.basedir>
+        <!--<main.outputDirectory>${main.basedir}/target/${apiproxy.name}</main.outputDirectory>-->
 
         <encoding>UTF-8</encoding>
         <java.version>1.8</java.version>
@@ -20,8 +20,11 @@
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
+        <deployment.suffix>-${user.name}</deployment.suffix>
+
         <apigee.username>${env.APIGEE_USERNAME}</apigee.username>
         <apigee.password>${env.APIGEE_PASSWORD}</apigee.password>
+        <apigee.apitype>apiproxy</apigee.apitype>
 
         <yaml.properties.maven.plugin.version>1.1.2</yaml.properties.maven.plugin.version>
         <exec.maven.plugin.version>1.6.0</exec.maven.plugin.version>
@@ -67,30 +70,30 @@
 
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.5</version>
-                <executions>
-                    <execution>
-                        <id>auto-clean-init</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                        <configuration>
-                            <filesets>
-                                <fileset>
-                                    <directory>${main.outputDirectory}</directory>
-                                    <includes>
-                                        <include>**</include>
-                                    </includes>
-                                    <followSymlinks>false</followSymlinks>
-                                </fileset>
-                            </filesets>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<artifactId>maven-clean-plugin</artifactId>-->
+                <!--<version>2.5</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>auto-clean-init</id>-->
+                        <!--<phase>validate</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>clean</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<filesets>-->
+                                <!--<fileset>-->
+                                    <!--<directory>${main.outputDirectory}</directory>-->
+                                    <!--<includes>-->
+                                        <!--<include>**</include>-->
+                                    <!--</includes>-->
+                                    <!--<followSymlinks>false</followSymlinks>-->
+                                <!--</fileset>-->
+                            <!--</filesets>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
 
             <plugin>
                 <groupId>it.ozimov</groupId>
@@ -165,7 +168,7 @@
                                     </includes>
                                 </resource>
                             </resources>
-                            <outputDirectory>${main.outputDirectory}/edge</outputDirectory>
+                            <outputDirectory>${project.build.directory}/edge</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -191,90 +194,37 @@
                                     <filtering>true</filtering>
                                     <includes>
                                         <include>apiproxy/**/*.*</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                            <outputDirectory>${main.outputDirectory}</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-apiproxy-tests</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <overwrite>true</overwrite>
-                            <encoding>UTF-8</encoding>
-                            <resources>
-                                <resource>
-                                    <directory>${main.basedir}/src/test/gateway</directory>
-                                    <filtering>true</filtering>
-                                    <includes>
-                                        <include>unit/common/**/*.*</include>
-                                        <include>unit/${apiproxy.name}/**/*.*</include>
-                                        <include>integration/**/*.*</include>
-                                    </includes>
-                                </resource>
-                                <resource>
-                                    <directory>${main.basedir}/src/test/gateway</directory>
-                                    <filtering>false</filtering>
-                                    <includes>
-                                        <include>performance/${apiproxy.name}/**/*.*</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                            <outputDirectory>${main.outputDirectory}/test</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-apiproxy-tests-resources</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <overwrite>true</overwrite>
-                            <encoding>UTF-8</encoding>
-                            <resources>
-                                <resource>
-                                    <directory>${main.basedir}/src/test/resources</directory>
-                                    <filtering>true</filtering>
-                                    <includes>
+                                        <include>test/**/*.*</include>
                                         <include>edge/**/*.*</include>
                                     </includes>
                                 </resource>
                             </resources>
-                            <outputDirectory>${main.outputDirectory}/test</outputDirectory>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-apiproxy-unit-test-support-files</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <encoding>UTF-8</encoding>
+                            <resources>
+                                <resource>
+                                    <directory>${main.basedir}/src/test/gateway/unit</directory>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>**/*.*</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.directory}/test/unit/common</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
-            <!--&lt;!&ndash; run apigeelint &ndash;&gt;-->
-            <!--<plugin>-->
-                <!--<groupId>com.cj.jshintmojo</groupId>-->
-                <!--<artifactId>jshint-maven-plugin</artifactId>-->
-                <!--<version>${jshint-maven-plugin.version}</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>jslint</id>-->
-                        <!--<phase>process-resources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>lint</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<version>2.4.3</version>-->
-                    <!--<options>indent,camelcase,curly,eqeqeq,forin,immed,latedef,undef,noempty,nonew,unused,noarg</options>-->
-                    <!--<directories>-->
-                        <!--<directory>../../../../target/${apiproxy.name}/apiproxy/resources/jsc</directory>-->
-                    <!--</directories>-->
-                    <!--<reporter>jslint</reporter>-->
-                    <!--<failOnError>true</failOnError>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
 
             <!-- run jslint -->
             <plugin>
@@ -294,7 +244,7 @@
                     <version>2.4.3</version>
                     <options>indent,camelcase,curly,eqeqeq,forin,immed,latedef,undef,noempty,nonew,unused,noarg</options>
                     <directories>
-                        <directory>../../../../target/${apiproxy.name}/apiproxy/resources/jsc</directory>
+                        <directory>${project.build.directory}/apiproxy/resources/jsc</directory>
                     </directories>
                     <reporter>jslint</reporter>
                     <failOnError>true</failOnError>
@@ -321,6 +271,7 @@
                             </commandlineArgs>
                         </configuration>
                     </execution>
+
                     <!-- run apigeelint -->
                     <execution>
                         <id>run-apigeelint</id>
@@ -332,10 +283,11 @@
                             <executable>node</executable>
                             <workingDirectory>${main.basedir}</workingDirectory>
                             <commandlineArgs>
-                                ./node_modules/apigeelint/cli.js -s ${main.outputDirectory}/apiproxy -w ${main.outputDirectory}/test/
+                                ./node_modules/apigeelint/cli.js -s ${project.build.directory}/apiproxy -w ${project.build.directory}/test/
                             </commandlineArgs>
                         </configuration>
                     </execution>
+
                     <!-- propagate apigeelint errors -->
                     <execution>
                         <id>propagate-apigeelint-errors</id>
@@ -347,7 +299,7 @@
                             <executable>node</executable>
                             <workingDirectory>${main.basedir}</workingDirectory>
                             <commandlineArgs>
-                                ./apigeelint.js -f ${main.outputDirectory}/test/apigeeLint.json -c warningCount
+                                ./build-utils/apigeelint.js -f ${project.build.directory}/test/apigeeLint.json -c ${apigeelint.threshold}
                             </commandlineArgs>
                         </configuration>
                     </execution>
@@ -363,7 +315,7 @@
                             <executable>node</executable>
                             <workingDirectory>${main.basedir}</workingDirectory>
                             <commandlineArgs>
-                                ./node_modules/mocha/bin/mocha ${main.outputDirectory}/test/unit/${apiproxy.name}
+                                ./node_modules/mocha/bin/mocha ${project.build.directory}/test/unit
                             </commandlineArgs>
                             <!--<skip>${apigee.skipTests}</skip>-->
                         </configuration>
@@ -388,15 +340,30 @@
 
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>io.apigee.build-tools.enterprise4g</groupId>
+                <artifactId>apigee-edge-maven-plugin</artifactId>
+                <version>1.1.5</version>
+                <executions>
+                    <execution>
+                        <id>configure-bundle-step</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>configure</goal>
+                        </goals>
+                    </execution>
+                    <!--deploy bundle -->
+                    <execution>
+                        <id>deploy-bundle-step</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
 </project>

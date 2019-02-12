@@ -2,6 +2,51 @@
                       xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 https://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd">
 
     <requiredProperties>
+
+        <!-- management api -->
+        <requiredProperty key="managementApiDomain">
+            <defaultValue>api.enterprise.apigee.com</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="managementApiProtocol">
+            <defaultValue>https</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="managementApiPort">
+            <defaultValue>443</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="managementApiVersion">
+            <defaultValue>v1</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="managementApiPath">
+            <defaultValue>/${managementApiVersion}</defaultValue>
+        </requiredProperty>
+
+        <!-- test env properties -->
+        <requiredProperty key="testOrganization" />
+        <requiredProperty key="testProtocol">
+            <defaultValue>https</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="testProxyDomain">
+            <defaultValue>${testOrganization}-test.apigee.net</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="testProxyVirtualHost">
+            <defaultValue>secure</defaultValue>
+        </requiredProperty>
+
+        <!-- prod env properties -->
+        <requiredProperty key="prodOrganization">
+            <defaultValue>${testOrganization}</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="prodProtocol">
+            <defaultValue>https</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="prodProxyDomain">
+            <defaultValue>${prodOrganization}-prod.apigee.net</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="prodProxyVirtualHost">
+            <defaultValue>secure</defaultValue>
+        </requiredProperty>
+
+        <!-- apiproxy properties -->
         <requiredProperty key="apiName">
             <defaultValue>${artifactId}</defaultValue>
         </requiredProperty>
@@ -11,12 +56,13 @@
         <requiredProperty key="apiproxyName">
             <defaultValue>${apiName}-${apiproxyVersion}</defaultValue>
         </requiredProperty>
-        <requiredProperty key="apiproxyBasepath">
+        <requiredProperty key="apiproxyBasePath">
             <defaultValue>/${apiName}/${apiproxyVersion}</defaultValue>
         </requiredProperty>
         <requiredProperty key="javaCalloutPackage">
-            <defaultValue>${groupId}.${apiName}.callout</defaultValue>
+            <defaultValue>${groupId}.${apiproxyName.replace("-", "_")}.callout</defaultValue>
         </requiredProperty>
+
     </requiredProperties>
 
     <fileSets>

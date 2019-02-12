@@ -1,15 +1,14 @@
-# Global configurations
+# Global configuration
 ---
 apigee:
-  hosturl: https://api.enterprise.apigee.com
-  apiversion: v1
+  hosturl: ${managementApiProtocol}://${managementApiDomain}:${managementApiPort}
+  apiversion: ${managementApiVersion}
   options: validate
   delay: 3000
-  org: iarellano-eval
-  managementUrl: https://api.enterprise.apigee.com/v1
+  managementUrl: ${managementApiProtocol}://${managementApiDomain}:${managementApiPort}${managementApiPath}
   apigee:
     config:
-      options: update
+      options: validate
 
-reverting:
-  proxy: false
+apigeelint:
+  threshold: errorCount

@@ -1,15 +1,4 @@
-# Global configurations
+# Global proxy configurations
 ---
-apigee:
-  hosturl: https://api.enterprise.apigee.com
-  apiversion: v1
-  options: validate
-  delay: 3000
-  org: iarellano-eval
-  managementUrl: https://api.enterprise.apigee.com/v1
-  apigee:
-    config:
-      options: update
-
-reverting:
-  proxy: false
+apiproxy:
+  name: ${apiproxyName}

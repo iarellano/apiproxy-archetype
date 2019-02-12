@@ -1,24 +1,16 @@
-
-# Profile specific configurations
+# ApiProxy test profile configuration
 ---
 apigee:
   env: test
-
-apiproxy:
-  name: template-v1
+  org: ${prodOrganization}
 
 northbound:
-  proxyEndpoint:
-    name: default
-    apiVersion: v1
-    basepath: ${apiproxyBasepath}
-    virtualhost: secure
-
+  domain: ${testProxyDomain}
+  basePath: ${apiproxyBasePath}
+  protocol: ${testProtocol}
+  virtualHost: ${testProxyVirtualHost}
 
 southbound:
   targetEndpoint:
-    name: template-v1
     successCodes: 2XX
     path: /
-
-inbound: tomala toda

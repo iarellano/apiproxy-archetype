@@ -3,7 +3,7 @@
 mvn clean install
 
 current_dir=`pwd`
-archetypeId="template"
+archetypeId="$1"
 targetdir="tmp"
 
 cd $targetdir
@@ -14,7 +14,8 @@ mvn archetype:generate                                  \
   -DarchetypeArtifactId=single-apiproxy-archetype       \
   -DarchetypeVersion=1.0-SNAPSHOT                       \
   -DgroupId=com.banorte.iarellano                       \
-  -DartifactId=$archetypeId \
+  -DartifactId=$archetypeId                             \
+  -DtestOrganization=iarellano-eval                     \
   -DinteractiveMode=false
 
 #cd $archetypeId/src/main/gateway/template-v1

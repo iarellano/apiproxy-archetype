@@ -1,21 +1,16 @@
-# Profile specific configurations
-
+# ApiProxy prod profile configuration
 ---
 apigee:
   env: prod
-
-apiproxy:
-  name: template-v1
+  org: ${prodOrganization}
 
 northbound:
-  proxyEndpoint:
-    name: default
-    apiVersion: v1
-    basepath: ${apiproxyBasepath}
-    virtualhost: secure
+  domain: ${prodProxyDomain}
+  basePath: ${apiproxyBasePath}
+  protocol: ${prodProtocol}
+  virtualHost: ${prodProxyVirtualHost}
 
 southbound:
   targetEndpoint:
-    name: template-v1
     successCodes: 2XX
     path: /

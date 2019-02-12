@@ -1,0 +1,4 @@
+#set ( $d = "$" )
+testcaseid         ,userstory        ,testcasedescription  ,env,servername               ,path                   ,execute,assertheader          ,assertcontent,assertcontentnegative,scopes
+${d}{apiproxyName}-1-2,${d}{apiproxyName}-2,valid status         ,${d}{apigee.env},${d}{northbound.proxyEndpoint.},/${d}{apiproxyName}/status,Y      ,HTTP/1.1 200 OK       ,STATUS       ,NON-EXISTENT-WORD    ,
+${d}{apiproxyName}-1-3,${d}{apiproxyName}-3,path suffix not found,${d}{apigee.env},${d}{},/${d}{apiproxyName}/foo   ,Y      ,HTTP/1.1 404 Not Found,No resource  ,NON-EXISTENT-WORD    ,

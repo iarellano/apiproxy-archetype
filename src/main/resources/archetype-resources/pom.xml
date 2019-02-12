@@ -33,6 +33,6 @@
     </profiles>
 
     <modules>
-        <module>src/main/gateway/template-v1</module>
+        <module>src/main/gateway/${apiproxyName}</module>
     </modules>
 </project>
