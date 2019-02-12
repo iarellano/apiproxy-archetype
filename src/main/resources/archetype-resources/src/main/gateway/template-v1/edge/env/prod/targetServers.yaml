@@ -1,0 +1,10 @@
+---
+
+- name: ${apiproxy.name}-rev${apiproxy.revision}
+  host: httpbin.org
+  isEnabled: true
+  port: 443
+  sSLInfo:
+    clientAuthEnabled: 'false'
+    enabled: 'true'
+    ignoreValidationErrors: 'true'

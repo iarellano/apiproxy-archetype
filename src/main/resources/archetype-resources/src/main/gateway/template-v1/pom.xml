@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+    <version>${version}</version>
+
+    <parent>
+        <groupId>${groupId}</groupId>
+        <artifactId>shared-pom</artifactId>
+        <version>${version}</version>
+        <relativePath>../../../../shared-pom.xml</relativePath>
+    </parent>
+
+    <properties>
+        <api.name>${apiName}</api.name>
+        <apiproxy.name>${apiproxyName}</apiproxy.name>
+        <apiproxy.version>${apiproxyVersion}</apiproxy.version>
+        <apiproxy.basepath>${apiproxyBasepath}</apiproxy.basepath>
+        <apiproxy.callout.package>${javaCalloutPackage}</apiproxy.callout.package>
+
+        <main.basedir>${project.parent.basedir}</main.basedir>
+        <main.outputDirectory>${main.basedir}/target/${apiproxy.name}</main.outputDirectory>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>it.ozimov</groupId>
+                <artifactId>yaml-properties-maven-plugin</artifactId>
+                <version>${yaml.properties.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>read-proxy-configs</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${project.basedir}/config/config.yaml</file>
+                                <file>${project.basedir}/config/profile-${apigee.profile}.yaml</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--<plugin>-->
+                <!--<groupId>com.github.iarellano</groupId>-->
+                <!--<artifactId>iad-maven-invoker-maven-plugin</artifactId>-->
+                <!--<version>1.0.1</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>build-callout</id>-->
+                        <!--<phase>process-resources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>execute</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<baseDirectory>./callout</baseDirectory>-->
+                            <!--<pomFile>pom.xml</pomFile>-->
+                            <!--<properties>-->
+                                <!--<property>-->
+                                    <!--<name>main.basedir</name>-->
+                                    <!--<value>${main.basedir}</value>-->
+                                <!--</property>-->
+                                <!--<property>-->
+                                    <!--<name>apiproxy.name</name>-->
+                                    <!--<value>${apiproxy.name}</value>-->
+                                <!--</property>-->
+                                <!--<property>-->
+                                    <!--<name>apiproxy.revision</name>-->
+                                    <!--<value>${apiproxy.revision}</value>-->
+                                <!--</property>-->
+                                <!--<property>-->
+                                    <!--<name>main.outputDirectory</name>-->
+                                    <!--<value>${main.outputDirectory}</value>-->
+                                <!--</property>-->
+                            <!--</properties>-->
+                            <!--<goals>-->
+                                <!--<goal>clean</goal>-->
+                                <!--<goal>compile</goal>-->
+                                <!--<goal>test</goal>-->
+                                <!--<goal>package</goal>-->
+                            <!--</goals>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
+
+
+            <!-- linting -->
+            <!-- apigeeling -->
+            <!--node node_modules/apigeelint/cli.js -s target/apiproxy -f table.js-->
+            <!-- /apigeeling -->
+
+
+            <!--<plugin>-->
+            <!--<groupId>io.apigee.build-tools.enterprise4g</groupId>-->
+            <!--<artifactId>apigee-edge-maven-plugin</artifactId>-->
+            <!--<version>${apigee.edge.maven.plugin.version}</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>configure-bundle-step</id>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+            <!--<goal>configure</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--&lt;!&ndash;deploy bundle &ndash;&gt;-->
+            <!--<execution>-->
+            <!--<id>deploy-bundle-step</id>-->
+            <!--<phase>install</phase>-->
+            <!--<goals>-->
+            <!--<goal>deploy</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+
+            <!--<plugin>-->
+            <!--<groupId>com.apigee.edge.config</groupId>-->
+            <!--<artifactId>apigee-config-maven-plugin</artifactId>-->
+            <!--<version>${apigee.config.maven.plugin.version}</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>create-config-cache</id>-->
+            <!--<phase>verify</phase>-->
+            <!--<goals>-->
+            <!--<goal>caches</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--<execution>-->
+            <!--<id>create-config-targetserver</id>-->
+            <!--<phase>verify</phase>-->
+            <!--<goals>-->
+            <!--<goal>targetservers</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--<execution>-->
+            <!--<id>create-config-kvm</id>-->
+            <!--<phase>verify</phase>-->
+            <!--<goals>-->
+            <!--<goal>keyvaluemaps</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--<execution>-->
+            <!--<id>create-config-apiproduct</id>-->
+            <!--<phase>install</phase>-->
+            <!--<goals>-->
+            <!--<goal>apiproducts</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--<execution>-->
+            <!--<id>create-config-developer</id>-->
+            <!--<phase>install</phase>-->
+            <!--<goals>-->
+            <!--<goal>developers</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--<execution>-->
+            <!--<id>create-config-app</id>-->
+            <!--<phase>install</phase>-->
+            <!--<goals>-->
+            <!--<goal>apps</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-antrun-plugin</artifactId>-->
+                <!--<version>1.7</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>validate</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<tasks>-->
+                                <!--<echoproperties />-->
+                            <!--</tasks>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
+        </plugins>
+    </build>
+</project>

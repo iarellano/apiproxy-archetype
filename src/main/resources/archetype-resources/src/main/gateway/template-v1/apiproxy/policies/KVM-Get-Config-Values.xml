@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<KeyValueMapOperations async="false" continueOnError="false" enabled="true" name="KVM-Get-Config-Values" mapIdentifier="${apiproxy.name}-rev${apiproxy.revision}">
+    <DisplayName>KVM-Get-Config-Values</DisplayName>
+    <Description>
+        Get proxy config values
+    </Description>
+    <Get assignTo="" index="1">
+        <Key>
+            <Parameter></Parameter>
+        </Key>
+    </Get>
+    <Scope>environment</Scope>
+    <ExpiryTimeInSecs>300</ExpiryTimeInSecs>
+</KeyValueMapOperations>

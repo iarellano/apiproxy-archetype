@@ -1,0 +1,10 @@
+---
+- name: ${apiproxy.name}-rev${apiproxy.revision}
+  description: user metadata cache
+  diskSizeInMB: 0
+  distributed: true
+  inMemorySizeInKB: 0
+  maxElementsInMemory: 0
+  maxElementsOnDisk: 0
+  overflowToDisk: false
+  persistent: false

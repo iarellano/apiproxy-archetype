@@ -1,0 +1,24 @@
+
+# Profile specific configurations
+---
+apigee:
+  env: test
+
+apiproxy:
+  name: template-v1
+
+northbound:
+  proxyEndpoint:
+    name: default
+    apiVersion: v1
+    basepath: ${apiproxyBasepath}
+    virtualhost: secure
+
+
+southbound:
+  targetEndpoint:
+    name: template-v1
+    successCodes: 2XX
+    path: /
+
+inbound: tomala toda

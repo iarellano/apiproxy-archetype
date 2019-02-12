@@ -1,0 +1,5 @@
+<JavaCallout name="JC-Execution-Callout">
+    <DisplayName>JC-Execution-Callout</DisplayName>
+    <ClassName>${javaCalloutPackage}.ExecutionCallout</ClassName>
+    <ResourceURL>java://${artifactId}-callout-rev${apiproxy.revision}.jar</ResourceURL>
+</JavaCallout>

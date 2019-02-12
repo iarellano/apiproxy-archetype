@@ -1,100 +1,77 @@
 <archetype-descriptor name="basic" xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                       xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 https://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd">
+
     <requiredProperties>
-        <requiredProperty key="dbHost">
-            <defaultValue>hola</defaultValue>
-        </requiredProperty>
-        <requiredProperty key="apiproxy">
+        <requiredProperty key="apiName">
             <defaultValue>${artifactId}</defaultValue>
         </requiredProperty>
-        <requiredProperty key="calloutPackage">
-            <defaultValue>${groupId}.${artifactId}</defaultValue>
+        <requiredProperty key="apiproxyVersion">
+            <defaultValue>v1</defaultValue>
         </requiredProperty>
-        <requiredProperty key="package">
-            <defaultValue>${groupId}.${artifactId}</defaultValue>
+        <requiredProperty key="apiproxyName">
+            <defaultValue>${apiName}-${apiproxyVersion}</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="apiproxyBasepath">
+            <defaultValue>/${apiName}/${apiproxyVersion}</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="javaCalloutPackage">
+            <defaultValue>${groupId}.${apiName}.callout</defaultValue>
         </requiredProperty>
     </requiredProperties>
 
     <fileSets>
 
-        <fileSet filtered="true" packaged="false">
-            <directory>misc</directory>
+        <fileSet filtered="true" encoding="UTF-8">
+            <directory>root</directory>
             <includes>
                 <include>**/*.*</include>
             </includes>
         </fileSet>
 
-        <fileSet filtered="true" packaged="false">
+        <fileSet filtered="true" encoding="UTF-8">
             <directory>config</directory>
             <includes>
-                <include>**/*.yaml</include>
+                <include>**/*.*</include>
             </includes>
         </fileSet>
 
-
-
-        <fileSet filtered="false" packaged="false">
+        <fileSet filtered="false">
             <directory>lib</directory>
             <includes>
                 <include>**/*.*</include>
             </includes>
         </fileSet>
 
-        <fileSet filtered="true" packaged="false">
-            <directory>src/main/apiproxy</directory>
+        <fileSet filtered="false" packaged="false">
+            <directory>build-utils</directory>
             <includes>
-                <include>**/*.xml</include>
+                <include>**/*.*</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+            <directory>src/main</directory>
+            <includes>
+                <include>**/*.*</include>
+
             </includes>
         </fileSet>
 
         <fileSet filtered="true" packaged="false">
-            <directory>src/test/apiproxy</directory>
+            <directory>src/test</directory>
             <includes>
-                <include>**/*.*</include>
+                <include>gateway/integration/**/*.*</include>
+                <include>gateway/unit/**/*.*</include>
+                <include>resources/edge/**/*.*</include>
             </includes>
-            <excludes>
-                <exclude>**/test.jmx</exclude>
-                <exclude>**/testdata.csv</exclude>
-            </excludes>
         </fileSet>
 
         <fileSet filtered="false" packaged="false">
-            <directory>src/test/apiproxy</directory>
+            <directory>src/test</directory>
             <includes>
-                <include>**/test.jmx</include>
-                <include>**/testdata.csv</include>
+                <include>gateway/performace/**/*.*</include>
             </includes>
         </fileSet>
-
-        <fileSet filtered="true" packaged="false">
-            <directory>src/main/callout</directory>
-            <includes>
-                <include>**/*.*</include>
-            </includes>
-        </fileSet>
-
-        <!--<fileSet filtered="true" packaged="false">-->
-            <!--<directory>src/test</directory>-->
-            <!--<includes>-->
-                <!--<include>edge/**/*.*</include>-->
-            <!--</includes>-->
-        <!--</fileSet>-->
-
-        <!--<fileSet filtered="true" packaged="true">-->
-            <!--<directory>src/callout</directory>-->
-            <!--<includes>-->
-                <!--<include>**/*.java</include>-->
-                <!--<include>**/*.xml</include>-->
-            <!--</includes>-->
-        <!--</fileSet>-->
-
-
-        <!--<fileSet filtered="true" packaged="false">-->
-            <!--<directory>src/apiproxy</directory>-->
-            <!--<includes>-->
-                <!--<include>**/*.xml</include>-->
-            <!--</includes>-->
-        <!--</fileSet>-->
 
     </fileSets>
 </archetype-descriptor>

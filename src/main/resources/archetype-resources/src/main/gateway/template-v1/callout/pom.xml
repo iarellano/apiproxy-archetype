@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}-callout</artifactId>
+    <version>${version}</version>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <encoding>UTF-8</encoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+
+        <!--
+            Following four properties are overriden by iad-maven-invoker-maven-plugn when
+            this project is built by ${apiproxy.name} project.
+         -->
+        <apiproxy.name>${apiproxyName}</apiproxy.name>
+        <apiproxy.revision>1</apiproxy.revision>
+        <main.basedir>./../../../../..</main.basedir>
+        <main.outputDirectory>${main.basedir}/target/${apiproxy.name}</main.outputDirectory>
+
+
+        <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
+        <maven.dependency.plugin.version>3.0.1</maven.dependency.plugin.version>
+        <maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
+
+        <junit.version>4.12</junit.version>
+        <testng.version>6.13.1</testng.version>
+        <jmockit.version>1.28</jmockit.version>
+        <com.apigee.expressions.version>1.0.0</com.apigee.expressions.version>
+        <com.apigee.flow.version>1.0.0</com.apigee.flow.version>
+        <fest.assert.version>1.4</fest.assert.version>
+        <fest.reflect.version>1.2</fest.reflect.version>
+
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven.clean.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean-install</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${main.outputDirectory}/apiproxy/resources/java</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                        <include>**/*.jar</include>
+                                    </includes>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven.dependency.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${main.outputDirectory}/apiproxy/resources/java</outputDirectory>
+                            <excludeGroupIds>com.apigee,junit,org.testng,org.jmockit,org.easytesting</excludeGroupIds>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <excludeTransitive>true</excludeTransitive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.plugin.version}</version>
+                <configuration>
+                    <finalName>${project.artifactId}-rev${apiproxy.revision}</finalName>
+                    <outputDirectory>${main.outputDirectory}/apiproxy/resources/java</outputDirectory>
+                </configuration>
+            </plugin>
+
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-antrun-plugin</artifactId>-->
+            <!--<version>1.7</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<phase>validate</phase>-->
+            <!--<goals>-->
+            <!--<goal>run</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<tasks>-->
+            <!--<echoproperties />-->
+            <!--</tasks>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.apigee</groupId>
+            <artifactId>com.apigee.expressions</artifactId>
+            <version>${com.apigee.expressions.version}</version>
+            <scope>system</scope>
+            <systemPath>${main.basedir}/lib/expressions-1.0.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.apigee</groupId>
+            <artifactId>com.apigee.flow</artifactId>
+            <version>${com.apigee.flow.version}</version>
+            <scope>system</scope>
+            <systemPath>${main.basedir}/lib/message-flow-1.0.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>${jmockit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <version>${fest.assert.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-reflect</artifactId>
+            <version>${fest.reflect.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

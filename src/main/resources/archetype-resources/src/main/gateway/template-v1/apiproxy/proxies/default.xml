@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>KVM-Get-Config-Values</Name>
+            </Step>
+            <Step>
+                <Name>VAK-Verify-API-Key</Name>
+            </Step>
+            <Step>
+                <Name>AM-Remove-Query-Param-apikey</Name>
+            </Step>
+            <Step>
+                <Name>QA-Impose-Quota</Name>
+            </Step>
+            <Step>
+                <Name>JC-Execution-Callout</Name>
+            </Step>
+        </Request>
+        <Response>
+            <Step>
+                <Name>JS-Compute-Latency</Name>
+            </Step>
+        </Response>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows/>
+    <HTTPProxyConnection>
+        <BasePath>${northbound.proxyEndpoint.basepath}</BasePath>
+        <VirtualHost>${northbound.proxyEndpoint.virtualhost}</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="default">
+        <TargetEndpoint>default</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>

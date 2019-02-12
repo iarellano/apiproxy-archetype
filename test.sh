@@ -3,8 +3,7 @@
 mvn clean install
 
 current_dir=`pwd`
-archetypeId="archetype-artifact-test"
-archetypeId="template_apiproxy_v1"
+archetypeId="template"
 targetdir="tmp"
 
 cd $targetdir
@@ -18,7 +17,9 @@ mvn archetype:generate                                  \
   -DartifactId=$archetypeId \
   -DinteractiveMode=false
 
-cd $archetypeId
-mvn -P test clean test
+#cd $archetypeId/src/main/gateway/template-v1
+#mvn -P test clean test
+#
+#mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list-plugin
 
 cd $current_dir

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TargetEndpoint name="default">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request/>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows/>
+    <HTTPTargetConnection>
+        <Properties>
+            <Property name="success.codes">${southbound.targetEndpoint.successCodes}</Property>
+        </Properties>
+        <LoadBalancer>
+            <Server name="${apiproxy.name}-rev${apiproxy.revision}"/>
+        </LoadBalancer>
+        <Path>${southbound.targetEndpoint.path}</Path>
+    </HTTPTargetConnection>
+</TargetEndpoint>
