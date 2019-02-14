@@ -11,13 +11,13 @@
                 <Name>VAK-Verify-API-Key</Name>
             </Step>
             <Step>
-                <Name>AM-Remove-Query-Param-apikey</Name>
+                <Name>AM-Remove-Query-Param-API-Key</Name>
             </Step>
             <Step>
-                <Name>QA-Impose-Quota</Name>
+                <Name>Quota-Impose-Quota</Name>
             </Step>
             <Step>
-                <Name>JC-Execution-Callout</Name>
+                <Name>Java-Execution-Callout</Name>
             </Step>
         </Request>
         <Response>
@@ -33,7 +33,7 @@
     <Flows/>
     <HTTPProxyConnection>
         <BasePath>${northbound.basePath}${deployment.suffix}</BasePath>
-        <VirtualHost>${northbound.virtualHost}</VirtualHost>
+        <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <RouteRule name="default">
         <TargetEndpoint>default</TargetEndpoint>

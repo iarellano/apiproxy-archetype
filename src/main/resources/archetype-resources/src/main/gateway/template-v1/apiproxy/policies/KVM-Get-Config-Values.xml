@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<KeyValueMapOperations async="false" continueOnError="false" enabled="true" name="KVM-Get-Config-Values" mapIdentifier="${apiproxy.name}-rev${apiproxy.revision}${deployment.suffix}">
+<KeyValueMapOperations async="false" continueOnError="false" enabled="true" name="KVM-Get-Config-Values" mapIdentifier="${apiproxy.canonicalName}">
     <DisplayName>KeyValueMap: Get Config Values</DisplayName>
     <Description>
         Get proxy config values

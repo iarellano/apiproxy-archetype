@@ -2,11 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>${groupId}</groupId>
-    <artifactId>${artifactId}-callout</artifactId>
+    <artifactId>${apiproxyName}-callout</artifactId>
     <version>${version}</version>
+    <packaging>jar</packaging>
+    <name>Java Callout Artifacts</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -16,15 +19,7 @@
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
-        <!--
-            Following four properties are overriden by iad-maven-invoker-maven-plugn when
-            this project is built by ${apiproxy.name} project.
-         -->
-        <apiproxy.name>${apiproxyName}</apiproxy.name>
-        <apiproxy.revision>1</apiproxy.revision>
-        <main.basedir>./../../../../..</main.basedir>
-        <main.outputDirectory>${main.basedir}/target/${apiproxy.name}</main.outputDirectory>
-
+        <main.outputDirectory>${project.basedir}/../target</main.outputDirectory>
 
         <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
         <maven.dependency.plugin.version>3.0.1</maven.dependency.plugin.version>
@@ -40,8 +35,32 @@
 
     </properties>
 
+
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <configLocation>checkstyle.xml</configLocation>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <linkXRef>false</linkXRef>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>${maven.clean.plugin.version}</version>
@@ -80,7 +99,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${main.outputDirectory}/apiproxy/resources/java</outputDirectory>
-                            <excludeGroupIds>com.apigee,junit,org.testng,org.jmockit,org.easytesting</excludeGroupIds>
+                            <excludeGroupIds>com.apigee,junit,org.testng,org.jmockit,org.easytesting,lint4j</excludeGroupIds>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>true</overWriteSnapshots>
                             <excludeTransitive>true</excludeTransitive>
@@ -93,7 +112,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${maven.jar.plugin.version}</version>
                 <configuration>
-                    <finalName>${apiproxy.name}-rev${apiproxy.revision}${deployment.suffix}</finalName>
+                    <finalName>${project.artifactId}</finalName>
                     <outputDirectory>${main.outputDirectory}/apiproxy/resources/java</outputDirectory>
                 </configuration>
             </plugin>
@@ -105,15 +124,11 @@
             <groupId>com.apigee</groupId>
             <artifactId>com.apigee.expressions</artifactId>
             <version>${com.apigee.expressions.version}</version>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/expressions-1.0.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.apigee</groupId>
             <artifactId>com.apigee.flow</artifactId>
             <version>${com.apigee.flow.version}</version>
-            <scope>system</scope>
-            <systemPath>${main.basedir}/lib/message-flow-1.0.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

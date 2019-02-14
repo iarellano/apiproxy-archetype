@@ -20,6 +20,10 @@ if (!apiproxyName.equals("template-v1")) {
     apiproxyDir.renameTo(new File(outputDir, "src/main/gateway/" + apiproxyName))
     apiproxyDir = new File(outputDir, "src/main/gateway/" + apiproxyName)
 
+    // Rename apiproxy descriptor
+    def apiproxyDescriptor = new File(new File(apiproxyDir, "apiproxy"), "template-v1.xml")
+    apiproxyDescriptor.renameTo(new File(new File(apiproxyDir, "apiproxy"), apiproxyName + ".xml"))
+
     // Rename edge/api/template-v1 to edge/api/${apiproxyName}
     def edgeApiproxyDir = new File(apiproxyDir, "edge/api/template-v1")
     edgeApiproxyDir.renameTo(new File(apiproxyDir, "edge/api/" + apiproxyName))
@@ -32,8 +36,6 @@ if (!apiproxyName.equals("template-v1")) {
     def perfomanceApiproxyDir = new File(outputDir, "src/test/gateway/performance/template-v1")
     perfomanceApiproxyDir.renameTo(new File(outputDir, "src/test/gateway/performance/" + apiproxyName))
 }
-
-
 
 // Create main/java directory estructure to match the package name
 def mainJavaDir = new File(apiproxyDir, "callout/src/main/java")

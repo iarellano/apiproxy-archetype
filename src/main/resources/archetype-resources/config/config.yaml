@@ -6,9 +6,8 @@ apigee:
   options: validate
   delay: 3000
   managementUrl: ${managementApiProtocol}://${managementApiDomain}:${managementApiPort}${managementApiPath}
-  apigee:
-    config:
-      options: validate
+  config:
+    options: create
 
 apigeelint:
   threshold: errorCount

@@ -33,6 +33,7 @@
     </profiles>
 
     <modules>
+        <module>src/main/gateway/${apiproxyName}/callout</module>
         <module>src/main/gateway/${apiproxyName}</module>
     </modules>
 </project>

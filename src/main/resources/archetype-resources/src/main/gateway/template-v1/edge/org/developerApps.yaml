@@ -1,18 +1,18 @@
 ---
 grant@enterprise.com:
 - apiProducts:
-  - weatherProduct
+  - ${apiproxy.canonicalName}-product
   callbackUrl: http://weatherapp.com
   name: grantoneapp
   scopes: []
 - apiProducts:
-  - weatherProduct
+  - ${apiproxy.canonicalName}-product
   callbackUrl: http://weatherapp.com
   name: granttwoapp
   scopes: []
 hugh@example.com:
 - apiProducts:
-  - weatherProduct
+  - ${apiproxy.canonicalName}-product
   callbackUrl: http://weatherapp.com
   name: hughapp
   scopes: []

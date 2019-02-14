@@ -16,7 +16,7 @@
             <Property name="success.codes">${southbound.targetEndpoint.successCodes}</Property>
         </Properties>
         <LoadBalancer>
-            <Server name="${apiproxy.name}-rev${apiproxy.revision}"/>
+            <Server name="${apiproxy.canonicalName}"/>
         </LoadBalancer>
         <Path>${southbound.targetEndpoint.path}</Path>
     </HTTPTargetConnection>

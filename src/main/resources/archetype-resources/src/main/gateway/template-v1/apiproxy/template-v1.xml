@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="2" name="${apiproxyName}${deployment.suffix}">
+    <Basepaths>${northbound.basePath}${deployment.suffix}</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1550066224854</CreatedAt>
+    <CreatedBy>iarellano@nearbpo.com</CreatedBy>
+    <Description>${apiproxyName}${deployment.suffix}</Description>
+    <DisplayName>${apiproxyName}${deployment.suffix}</DisplayName>
+    <LastModifiedAt>1550069442898</LastModifiedAt>
+    <LastModifiedBy>iarellano@nearbpo.com</LastModifiedBy>
+    <Policies>
+        <Policy>AM-Remove-Query-Param-API-Key</Policy>
+        <Policy>Java-Execution-Callout</Policy>
+        <Policy>JS-Compute-Latency</Policy>
+        <Policy>KVM-Get-Config-Values</Policy>
+        <Policy>Quota-Impose-Quota</Policy>
+        <Policy>VAK-Verify-API-Key</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://JS-Compute-Latency.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy>

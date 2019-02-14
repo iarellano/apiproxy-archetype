@@ -1,7 +1,7 @@
 ---
-- name: weatherProduct
-  displayName: weatherProduct
-  description: weatherProduct
+- name: ${apiproxy.canonicalName}-product
+  displayName: ${apiproxy.canonicalName}-product
+  description: CICD Product
   apiResources:
   - "/**"
   - "/"
@@ -18,7 +18,7 @@
   environments:
   - test
   proxies:
-  - forecastweatherapi
+  - ${apiproxy.name}${deployment.suffix}
   quota: '10000'
   quotaInterval: '1'
   quotaTimeUnit: month

@@ -1,5 +1,5 @@
 <JavaCallout name="Java-Execution-Callout">
     <DisplayName>Java: Execution Callout</DisplayName>
     <ClassName>${javaCalloutPackage}.ExecutionCallout</ClassName>
-    <ResourceURL>java://${apiproxy.name}-callout-rev${apiproxy.revision}${deployment.suffix}.jar</ResourceURL>
+    <ResourceURL>java://${apiproxy.name}-callout.jar</ResourceURL>
 </JavaCallout>
