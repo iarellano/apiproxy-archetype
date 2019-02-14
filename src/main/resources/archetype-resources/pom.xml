@@ -19,21 +19,149 @@
 
     <profiles>
         <profile>
+            <!--
+                Activate modules for test profile
+            -->
             <id>test</id>
             <properties>
                 <apigee.profile>test</apigee.profile>
             </properties>
+            <modules>
+                <module>src/main/gateway/${apiproxyName}/callout</module>
+                <module>src/main/gateway/${apiproxyName}</module>
+            </modules>
         </profile>
         <profile>
+            <!--
+                Activate modules for prod profile
+            -->
             <id>prod</id>
             <properties>
                 <apigee.profile>prod</apigee.profile>
             </properties>
+            <modules>
+                <module>src/main/gateway/${apiproxyName}/callout</module>
+                <module>src/main/gateway/${apiproxyName}</module>
+            </modules>
+        </profile>
+        <profile>
+            <!--
+                Configure apigee resources that are not proxy specific
+            -->
+            <id>configure</id>
+            <properties>
+                <apigee.env>${apigee.profile}</apigee.env>
+                <apigee.config.options>update</apigee.config.options>
+                <apigee.config.dir>${project.build.directory}/edge</apigee.config.dir>
+
+                <iad-j2y2j-converter-maven-plugin.version>1.0</iad-j2y2j-converter-maven-plugin.version>
+                <yaml-properties-maven-plugin.version>1.1.2</yaml-properties-maven-plugin.version>
+                <apigee-config-maven-plugin.version>1.2</apigee-config-maven-plugin.version>
+            </properties>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>it.ozimov</groupId>
+                        <artifactId>yaml-properties-maven-plugin</artifactId>
+                        <version>${yaml-properties-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>read-global-properties</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>read-project-properties</goal>
+                                </goals>
+                                <configuration>
+                                    <files>
+                                        <file>${project.basedir}/config/config.yaml</file>
+                                        <file>${project.basedir}/config/profile-${apigee.profile}.yaml</file>
+                                    </files>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.github.iarellano</groupId>
+                        <artifactId>iad-j2y2j-converter-maven-plugin</artifactId>
+                        <version>${iad-j2y2j-converter-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>copy-edge-configs</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>yaml-2-json</goal>
+                                </goals>
+                                <configuration>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.basedir}/src/main/resources/edge</directory>
+                                            <filtering>true</filtering>
+                                            <includes>
+                                                <include>api/**/*.yaml</include>
+                                                <include>env/${apigee.profile}/*.yaml</include>
+                                                <include>org/*.yaml</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                    <outputDirectory>${project.build.directory}/edge</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.apigee.edge.config</groupId>
+                        <artifactId>apigee-config-maven-plugin</artifactId>
+                        <version>${apigee-config-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>create-config-cache</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>caches</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-targetserver</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>targetservers</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-kvm</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>keyvaluemaps</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-apiproduct</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>apiproducts</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-developer</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>developers</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-app</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>apps</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
-
-    <modules>
-        <module>src/main/gateway/${apiproxyName}/callout</module>
-        <module>src/main/gateway/${apiproxyName}</module>
-    </modules>
 </project>

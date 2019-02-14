@@ -27,7 +27,6 @@
 
         <main.basedir>${project.basedir}/../../../..</main.basedir>
         <main.outputDirectory>${main.basedir}/target/${apiproxy.name}</main.outputDirectory>
-
     </properties>
 
     <build>

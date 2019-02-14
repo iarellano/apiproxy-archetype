@@ -1,0 +1,7 @@
+# Developers not related to a specific proxy or shared by proxies
+---
+- attributes: []
+  email: shared-grant@enterprise.com
+  firstName: Grant
+  lastName: Smith
+  userName: grantsmith

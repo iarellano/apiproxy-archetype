@@ -1,0 +1,8 @@
+# Developer Apps not related to a specific proxy or shared by proxies
+---
+shared-grant@enterprise.com:
+- apiProducts:
+  - shared-product
+  callbackUrl: http://weatherapp.com
+  name: shared-grantoneapp
+  scopes: []

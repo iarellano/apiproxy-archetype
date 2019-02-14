@@ -50,9 +50,6 @@
             <properties>
                 <apigee.profile>test</apigee.profile>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <id>prod</id>
@@ -64,6 +61,7 @@
             <id>integration</id>
             <properties>
                 <integrationProfileActivated>true</integrationProfileActivated>
+                <apigee.config.options>update</apigee.config.options>
             </properties>
             <build>
                 <plugins>
@@ -92,6 +90,13 @@
                                 <phase>generate-test-resources</phase>
                                 <goals>
                                     <goal>apps</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>export-api-keys</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>exportAppKeys</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -460,13 +465,8 @@
                             <!--<skip>${apigee.skipTests}</skip>-->
                         </configuration>
                     </execution>
-
-
-
                 </executions>
             </plugin>
-
-
         </plugins>
     </build>
 </project>

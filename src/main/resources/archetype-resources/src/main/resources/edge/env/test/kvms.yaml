@@ -1,0 +1,9 @@
+# KVMs not related to a specific proxy or shared by proxies
+---
+- name: shared-kvm
+  entry:
+  - name: COMPANY
+    value: example.com
+  - name: PREFIX
+    value: EXMPL
+

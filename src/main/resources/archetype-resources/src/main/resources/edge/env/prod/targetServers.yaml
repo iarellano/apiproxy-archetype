@@ -1,0 +1,10 @@
+# TargetServers not related to a specific proxy or shared by proxies
+---
+- name: shared-target-server
+  host: httpbin.org
+  isEnabled: true
+  port: 443
+  sSLInfo:
+    clientAuthEnabled: 'false'
+    enabled: 'true'
+    ignoreValidationErrors: 'true'
