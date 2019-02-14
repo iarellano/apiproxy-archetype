@@ -1,6 +1,19 @@
-import groovy.json.JsonSlurper;
+import groovy.json.JsonSlurper
+
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSession
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+import java.security.SecureRandom
+import java.security.cert.X509Certificate;
 
 class Request {
+
+    static {
+        installSslSkipVerification()
+    }
 
     private HttpURLConnection connection
 
@@ -24,6 +37,39 @@ class Request {
             os.write(buffer, 0, bytesRead)
         }
         return os.toString("UTF-8")
+    }
+
+    private static void installSslSkipVerification() {
+
+        X509TrustManager trustManager = createHollowTrustManager()
+        TrustManager[] trustManagers = new TrustManager[1]
+        trustManagers[0] = trustManager
+        SSLContext sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustManagers, new SecureRandom())
+        HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory())
+        HostnameVerifier allHostsValid = new HostnameVerifier() {
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+
+    }
+
+    private static X509TrustManager createHollowTrustManager() {
+        return new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                // Do nothing
+            }
+
+            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                // Do nothing
+            }
+        };
     }
 }
 

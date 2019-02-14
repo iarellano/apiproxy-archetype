@@ -8,15 +8,21 @@ targetdir="tmp"
 
 cd $targetdir
 rm -rf $archetypeId
+mkdir $archetypeId
+cd $archetypeId
 
-mvn archetype:generate                                  \
-  -DarchetypeGroupId=com.github.iarellano               \
-  -DarchetypeArtifactId=single-apiproxy-archetype       \
-  -DarchetypeVersion=1.0-SNAPSHOT                       \
-  -DgroupId=com.banorte.iarellano                       \
-  -DartifactId=$archetypeId                             \
-  -DtestOrganization=iarellano-eval                     \
-  -DinteractiveMode=false
+cp ../pom.xml ./
+#mvn archetype:generate                                  \
+#  -DarchetypeGroupId=com.github.iarellano               \
+#  -DarchetypeArtifactId=single-apiproxy-archetype       \
+#  -DarchetypeVersion=1.0-SNAPSHOT                       \
+#  -DgroupId=com.banorte.iarellano                       \
+#  -DartifactId=$archetypeId                             \
+#  -DtestOrganization=openbanking                        \
+#  -DinteractiveMode=false
+
+mvn archetype:create-from-project -Darchetype.properties=../project.properties
+
 
 #cd $archetypeId/src/main/gateway/template-v1
 #mvn -P test clean test

@@ -19,9 +19,7 @@
 
     <profiles>
         <profile>
-            <!--
-                Activate modules for test profile
-            -->
+            <!-- Activate modules for test profile -->
             <id>test</id>
             <properties>
                 <apigee.profile>test</apigee.profile>
@@ -32,9 +30,7 @@
             </modules>
         </profile>
         <profile>
-            <!--
-                Activate modules for prod profile
-            -->
+            <!-- Activate modules for prod profile -->
             <id>prod</id>
             <properties>
                 <apigee.profile>prod</apigee.profile>
@@ -45,10 +41,8 @@
             </modules>
         </profile>
         <profile>
-            <!--
-                Configure apigee resources that are not proxy specific
-            -->
-            <id>configure</id>
+            <!-- Configure apigee resources that are not proxy specific -->
+            <id>globalconfig</id>
             <properties>
                 <apigee.env>${apigee.profile}</apigee.env>
                 <apigee.config.options>update</apigee.config.options>
@@ -60,7 +54,6 @@
             </properties>
             <build>
                 <plugins>
-
                     <plugin>
                         <groupId>it.ozimov</groupId>
                         <artifactId>yaml-properties-maven-plugin</artifactId>
@@ -88,8 +81,8 @@
                         <version>${iad-j2y2j-converter-maven-plugin.version}</version>
                         <executions>
                             <execution>
-                                <id>copy-edge-configs</id>
-                                <phase>process-resources</phase>
+                                <id>copy-global-edge-configs</id>
+                                <phase>generate-resources</phase>
                                 <goals>
                                     <goal>yaml-2-json</goal>
                                 </goals>
@@ -117,43 +110,43 @@
                         <version>${apigee-config-maven-plugin.version}</version>
                         <executions>
                             <execution>
-                                <id>create-config-cache</id>
-                                <phase>install</phase>
+                                <id>create-global-config-cache</id>
+                                <phase>process-resources</phase>
                                 <goals>
                                     <goal>caches</goal>
                                 </goals>
                             </execution>
                             <execution>
-                                <id>create-config-targetserver</id>
-                                <phase>install</phase>
+                                <id>create-global-config-targetserver</id>
+                                <phase>process-resources</phase>
                                 <goals>
                                     <goal>targetservers</goal>
                                 </goals>
                             </execution>
                             <execution>
-                                <id>create-config-kvm</id>
-                                <phase>install</phase>
+                                <id>create-global-config-kvm</id>
+                                <phase>process-resources</phase>
                                 <goals>
                                     <goal>keyvaluemaps</goal>
                                 </goals>
                             </execution>
                             <execution>
-                                <id>create-config-apiproduct</id>
-                                <phase>install</phase>
+                                <id>create-global-config-apiproduct</id>
+                                <phase>process-resources</phase>
                                 <goals>
                                     <goal>apiproducts</goal>
                                 </goals>
                             </execution>
                             <execution>
-                                <id>create-config-developer</id>
-                                <phase>install</phase>
+                                <id>create-global-config-developer</id>
+                                <phase>process-resources</phase>
                                 <goals>
                                     <goal>developers</goal>
                                 </goals>
                             </execution>
                             <execution>
-                                <id>create-config-app</id>
-                                <phase>install</phase>
+                                <id>create-global-config-app</id>
+                                <phase>process-resources</phase>
                                 <goals>
                                     <goal>apps</goal>
                                 </goals>

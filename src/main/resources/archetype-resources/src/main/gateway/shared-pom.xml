@@ -9,7 +9,6 @@
     <properties>
 
         <main.basedir>${project.basedir}/../../..</main.basedir>
-        <apiproxy.basedir>${project.basedir}</apiproxy.basedir>
         <deployment.suffix>-${user.name}</deployment.suffix>
         <!--
             apiproxy.canonicalName = ${apiproxy.name}${deployment.suffix}-rev${apiproxy.revision}
@@ -62,6 +61,7 @@
             <properties>
                 <integrationProfileActivated>true</integrationProfileActivated>
                 <apigee.config.options>update</apigee.config.options>
+                <api.testtag>@apiproxy</api.testtag>
             </properties>
             <build>
                 <plugins>
@@ -73,31 +73,61 @@
                         <executions>
                             <execution>
                                 <id>create-config-apiproduct</id>
-                                <phase>generate-test-resources</phase>
+                                <phase>pre-integration-test</phase>
                                 <goals>
                                     <goal>apiproducts</goal>
                                 </goals>
                             </execution>
                             <execution>
                                 <id>create-config-developer</id>
-                                <phase>generate-test-resources</phase>
+                                <phase>pre-integration-test</phase>
                                 <goals>
                                     <goal>developers</goal>
                                 </goals>
                             </execution>
                             <execution>
                                 <id>create-config-app</id>
-                                <phase>generate-test-resources</phase>
+                                <phase>pre-integration-test</phase>
                                 <goals>
                                     <goal>apps</goal>
                                 </goals>
                             </execution>
                             <execution>
                                 <id>export-api-keys</id>
-                                <phase>generate-test-resources</phase>
+                                <phase>pre-integration-test</phase>
                                 <goals>
                                     <goal>exportAppKeys</goal>
                                 </goals>
+                            </execution>
+                            <execution>
+                                <id>delete-config-app</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>apps</goal>
+                                </goals>
+                                <configuration>
+                                    <options>delete</options>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>delete-config-developer</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>developers</goal>
+                                </goals>
+                                <configuration>
+                                    <options>delete</options>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>delete-config-apiproduct</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>apiproducts</goal>
+                                </goals>
+                                <configuration>
+                                    <options>delete</options>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -110,14 +140,15 @@
                         <executions>
                             <execution>
                                 <id>run-integration-testing</id>
-                                <phase>test</phase>
+                                <phase>integration-test</phase>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
                                     <executable>node</executable>
+                                    <workingDirectory>${main.basedir}</workingDirectory>
                                     <commandlineArgs>
-                                        ./node_modules/cucumber/bin/cucumber.js target/test/integration/features --tags ${api.testtag}
+                                        ./node_modules/cucumber/bin/cucumber.js ${project.build.directory}/test/integration/features --tags ${api.testtag}
                                     </commandlineArgs>
                                 </configuration>
                             </execution>
@@ -348,24 +379,45 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>copy-apiproxy-unit-test-support-files</id>
+                        <id>copy-apiproxy-unit-testing-support-files</id>
                         <phase>generate-test-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <overwrite>true</overwrite>
+                            <overwrite>false</overwrite>
                             <encoding>UTF-8</encoding>
                             <resources>
                                 <resource>
                                     <directory>${main.basedir}/src/test/gateway/unit</directory>
-                                    <filtering>false</filtering>
+                                    <filtering>true</filtering>
                                     <includes>
                                         <include>**/*.*</include>
                                     </includes>
                                 </resource>
                             </resources>
                             <outputDirectory>${project.build.directory}/test/unit/common</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-apiproxy-integration-testing-support-files</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>false</overwrite>
+                            <encoding>UTF-8</encoding>
+                            <resources>
+                                <resource>
+                                    <directory>${main.basedir}/src/test/gateway/integration</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.*</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.directory}/test/integration</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

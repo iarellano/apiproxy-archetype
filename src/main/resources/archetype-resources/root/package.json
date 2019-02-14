@@ -5,7 +5,7 @@
     "devDependencies": {
         "fs-extra": "^7.0.1",
         "apickli": "^2.3.0",
-        "cucumber": "^5.1.0",
+        "cucumber": "^1.0.0",
         "crypto-js": "^3.1.9-1",
         "mocha": "^5.2.0",
         "sinon": "^7.2.3",

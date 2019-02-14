@@ -25,6 +25,9 @@
         <requiredProperty key="testProtocol">
             <defaultValue>https</defaultValue>
         </requiredProperty>
+        <requiredProperty key="testProxyPort">
+            <defaultValue>443</defaultValue>
+        </requiredProperty>
         <requiredProperty key="testProxyDomain">
             <defaultValue>${testOrganization}-test.apigee.net</defaultValue>
         </requiredProperty>
@@ -38,6 +41,9 @@
         </requiredProperty>
         <requiredProperty key="prodProtocol">
             <defaultValue>https</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="prodProxyPort">
+            <defaultValue>443</defaultValue>
         </requiredProperty>
         <requiredProperty key="prodProxyDomain">
             <defaultValue>${prodOrganization}-prod.apigee.net</defaultValue>

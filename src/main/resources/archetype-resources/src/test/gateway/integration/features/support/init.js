@@ -1,10 +1,10 @@
 /* jshint node:true */
 'use strict';
 
-var apickli = require('apickli');
-var config = require('../../config.json');
-var devAppKeys = require('../../../devAppKeys.json');
-var devApps = require('../../../../edge/org/developerApps.json');
+var apickli    = require('apickli');
+var config     = require('../../config.json');
+var devAppKeys = require('../../../../devAppKeys.json');
+var devApps    = require('../../../../edge/org/developerApps.json');
 
 for (var developer in devApps) {
     console.log("Developer: " + developer);
@@ -24,10 +24,7 @@ for (var developer in devApps) {
     }
 }
 
-var domain = config.parameters.domain;
-var tokenDomain = config.parameters.tokenDomain;
-var tokenBasepath = config.parameters.tokenBasepath;
-var audience = config.parameters.audience;
+var domain   = config.parameters.domain;
 var basepath = config.parameters.basepath;
 
 
@@ -37,13 +34,8 @@ module.exports = function() {
     // cleanup before every scenario
     this.Before(function(scenario, callback) {
         console.log('Before scenario hook');
-        this.apickli = new apickli.Apickli('https', domain + basepath);
+        this.apickli = new apickli.Apickli('${northbound.protocol}', domain + basepath);
         this.apickli.storeValueInScenarioScope("domain", domain);
-        this.apickli.storeValueInScenarioScope("tokenDomain", tokenDomain );
-        this.apickli.storeValueInScenarioScope("tokenBasepath", tokenBasepath);
-        this.apickli.storeValueInScenarioScope("audience", audience);
-        this.apickli.storeValueInScenarioScope("alg", 'RS256');
-        this.apickli.storeValueInScenarioScope("typ", 'JWT');
         this.apickli.storeValueInScenarioScope("developerApps", config.parameters);
         callback();
     });

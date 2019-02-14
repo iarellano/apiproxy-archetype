@@ -1,11 +1,6 @@
 ---
 - attributes: []
-  email: hugh@example.com
-  firstName: Hugh
-  lastName: Jackman
-  userName: hughexample
-- attributes: []
-  email: grant@enterprise.com
-  firstName: Grant
-  lastName: Smith
-  userName: grantsmith
+  email: ${apiproxy.canonicalName}@${apiproxy.name}.com
+  firstName: Integration
+  lastName: Testing
+  userName: ${apiproxy.canonicalName}
