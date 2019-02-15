@@ -15,6 +15,7 @@ mvn archetype:generate                                  \
   -DarchetypeVersion=1.0-SNAPSHOT                       \
   -DgroupId=com.deploy.test                             \
   -DartifactId=$archetypeId                             \
+  -DtestOrganization=iarellano-eval                     \
   -DinteractiveMode=false
 
 cd $current_dir
