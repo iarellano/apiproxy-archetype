@@ -34,7 +34,7 @@ module.exports = function() {
     // cleanup before every scenario
     this.Before(function(scenario, callback) {
         console.log('Before scenario hook');
-        this.apickli = new apickli.Apickli('${northbound.protocol}', domain + basepath);
+        this.apickli = new apickli.Apickli('${northbound.protocol}', domain + ":${northbound.port}" + basepath);
         this.apickli.storeValueInScenarioScope("domain", domain);
         this.apickli.storeValueInScenarioScope("developerApps", config.parameters);
         callback();

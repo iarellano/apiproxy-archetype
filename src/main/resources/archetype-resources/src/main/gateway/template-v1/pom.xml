@@ -57,7 +57,7 @@
     <dependencies>
         <dependency>
             <groupId>${groupId}</groupId>
-            <artifactId>${artifactId}-callout</artifactId>
+            <artifactId>${apiproxyName}-callout</artifactId>
             <version>${version}</version>
         </dependency>
     </dependencies>

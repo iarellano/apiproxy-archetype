@@ -6,6 +6,7 @@ apigee:
 
 northbound:
   domain: ${testProxyDomain}
+  port: ${testProxyPort}
   basePath: ${apiproxyBasePath}
   protocol: ${testProtocol}
   virtualHost: ${testProxyVirtualHost}

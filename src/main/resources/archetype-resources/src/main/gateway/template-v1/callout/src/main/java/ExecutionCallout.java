@@ -6,7 +6,7 @@ import com.apigee.flow.message.MessageContext;
 
 import java.util.Map;
 
-class ExecutionCallout extends AbstractExecution {
+public class ExecutionCallout extends AbstractExecution {
 
     public ExecutionCallout(Map<String, Object> properties) {
         super(properties);
