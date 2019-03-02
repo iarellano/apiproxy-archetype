@@ -16,7 +16,7 @@
             <Property name="success.codes">${southbound.targetEndpoint.successCodes}</Property>
         </Properties>
         <LoadBalancer>
-            <Server name="${apiproxy.canonicalName}"/>
+            <Server name="${shared.resource.name}"/>
         </LoadBalancer>
         <Path>${southbound.targetEndpoint.path}</Path>
     </HTTPTargetConnection>

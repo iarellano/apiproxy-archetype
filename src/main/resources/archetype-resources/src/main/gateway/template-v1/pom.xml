@@ -10,6 +10,8 @@
     <name>${apiproxyName}${deployment.suffix}</name>
     <packaging>pom</packaging>
 
+    <description>API Proxy ${apiproxyName}</description>
+
     <parent>
         <groupId>${groupId}</groupId>
         <artifactId>shared-pom</artifactId>
@@ -22,19 +24,29 @@
         <apiproxy.name>${apiproxyName}</apiproxy.name>
         <apiproxy.version>${apiproxyVersion}</apiproxy.version>
         <apiproxy.basepath>${apiproxyBasePath}</apiproxy.basepath>
-        <apiproxy.callout.package>${javaCalloutPackage}</apiproxy.callout.package>
         <apiproxy.basedir>${project.basedir}</apiproxy.basedir>
 
         <main.basedir>${project.basedir}/../../../..</main.basedir>
         <main.outputDirectory>${main.basedir}/target/${apiproxy.name}</main.outputDirectory>
     </properties>
 
+    <!-- Proxy specific profile settings -->
+    <profiles>
+        <profile>
+            <id>test</id>
+        </profile>
+        <profile>
+            <id>prod</id>
+        </profile>
+    </profiles>
+
+    <!-- Load proxy specific profile settings and commom settings -->
     <build>
         <plugins>
             <plugin>
                 <groupId>it.ozimov</groupId>
                 <artifactId>yaml-properties-maven-plugin</artifactId>
-                <version>${yaml.properties.maven.plugin.version}</version>
+                <version>${yaml-properties-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>read-proxy-configs</id>
@@ -55,6 +67,7 @@
     </build>
 
     <dependencies>
+        <!-- Java Callout dependency -->
         <dependency>
             <groupId>${groupId}</groupId>
             <artifactId>${apiproxyName}-callout</artifactId>

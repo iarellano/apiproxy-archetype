@@ -2,8 +2,8 @@
     "parameters": {
         "domain": "${northbound.domain}",
         "basepath": "${northbound.basePath}${deployment.suffix}",
-        "${apiproxy.canonicalName}-app": {
-            "name": "${apiproxy.canonicalName}-app",
+        "${shared.resource.name}-app": {
+            "name": "${shared.resource.name}-app",
             "clientId": "",
             "clientSecret": ""
         }

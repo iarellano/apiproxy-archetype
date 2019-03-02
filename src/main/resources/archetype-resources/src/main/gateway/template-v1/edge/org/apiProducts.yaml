@@ -1,6 +1,6 @@
 ---
-- name: ${apiproxy.canonicalName}-product
-  displayName: ${apiproxy.canonicalName}-product
+- name: ${shared.resource.name}-product
+  displayName: ${shared.resource.name}-product
   description: CICD Product
   apiResources:
   - "/**"

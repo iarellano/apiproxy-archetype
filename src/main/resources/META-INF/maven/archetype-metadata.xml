@@ -105,7 +105,6 @@
             <directory>src/main</directory>
             <includes>
                 <include>**/*.*</include>
-
             </includes>
         </fileSet>
 

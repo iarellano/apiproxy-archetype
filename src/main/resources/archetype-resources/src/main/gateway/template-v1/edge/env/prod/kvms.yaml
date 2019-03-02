@@ -1,5 +1,5 @@
 ---
-- name: ${apiproxy.canonicalName}
+- name: ${shared.resource.name}
   entry:
   - name: COMPANY
     value: example.com

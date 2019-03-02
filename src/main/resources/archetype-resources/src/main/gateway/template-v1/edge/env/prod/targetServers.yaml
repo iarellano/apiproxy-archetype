@@ -1,5 +1,5 @@
 ---
-- name: ${apiproxy.canonicalName}
+- name: ${shared.resource.name}
   host: httpbin.org
   isEnabled: true
   port: 443

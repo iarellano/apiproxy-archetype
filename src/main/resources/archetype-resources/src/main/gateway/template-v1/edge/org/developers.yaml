@@ -1,6 +1,6 @@
 ---
 - attributes: []
-  email: ${apiproxy.canonicalName}@${apiproxy.name}.com
+  email: ${shared.resource.name}@${apiproxy.name}.com
   firstName: Integration
   lastName: Testing
-  userName: ${apiproxy.canonicalName}
+  userName: ${shared.resource.name}

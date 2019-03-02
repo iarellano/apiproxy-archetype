@@ -11,6 +11,8 @@
     <packaging>jar</packaging>
     <name>Java Callout Artifacts</name>
 
+    <description>JavaCallout Implementations</description>
+
     <properties>
         <java.version>1.8</java.version>
         <encoding>UTF-8</encoding>
@@ -21,18 +23,22 @@
 
         <main.outputDirectory>${project.basedir}/../target</main.outputDirectory>
 
-        <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
-        <maven.dependency.plugin.version>3.0.1</maven.dependency.plugin.version>
-        <maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
+        <!-- Plugins versions -->
+        <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
+        <maven-dependency-plugin.version>3.0.1</maven-dependency-plugin.version>
+        <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
 
+        <!-- Runtime dependencies versions -->
+        <expressions.version>1.0.0</expressions.version>
+        <message-flow.version>1.0.0</message-flow.version>
+
+        <!-- Testing dependecies version -->
         <junit.version>4.12</junit.version>
         <testng.version>6.13.1</testng.version>
         <jmockit.version>1.28</jmockit.version>
-        <com.apigee.expressions.version>1.0.0</com.apigee.expressions.version>
-        <com.apigee.flow.version>1.0.0</com.apigee.flow.version>
-        <fest.assert.version>1.4</fest.assert.version>
-        <fest.reflect.version>1.2</fest.reflect.version>
-
+        <fest-assert.version>1.4</fest-assert.version>
+        <fest-reflect.version>1.2</fest-reflect.version>
     </properties>
 
 
@@ -42,7 +48,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${maven-checkstyle-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>validate</id>
@@ -63,7 +69,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>${maven.clean.plugin.version}</version>
+                <version>${maven-clean-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>auto-clean-install</id>
@@ -89,7 +95,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven.dependency.plugin.version}</version>
+                <version>${maven-dependency-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -110,7 +116,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven.jar.plugin.version}</version>
+                <version>${maven-jar-plugin.version}</version>
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <outputDirectory>${main.outputDirectory}/apiproxy/resources/java</outputDirectory>
@@ -120,16 +126,21 @@
     </build>
 
     <dependencies>
+        <!-- provided dependencies -->
         <dependency>
             <groupId>com.apigee</groupId>
-            <artifactId>com.apigee.expressions</artifactId>
-            <version>${com.apigee.expressions.version}</version>
+            <artifactId>expressions</artifactId>
+            <version>${expressions.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.apigee</groupId>
-            <artifactId>com.apigee.flow</artifactId>
-            <version>${com.apigee.flow.version}</version>
+            <artifactId>message-flow</artifactId>
+            <version>${message-flow.version}</version>
+            <scope>provided</scope>
         </dependency>
+
+        <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -151,13 +162,13 @@
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert</artifactId>
-            <version>${fest.assert.version}</version>
+            <version>${fest-assert.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-reflect</artifactId>
-            <version>${fest.reflect.version}</version>
+            <version>${fest-reflect.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

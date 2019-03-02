@@ -1,6 +1,6 @@
 ---
-${apiproxy.canonicalName}@${apiproxy.name}.com:
-- name: ${apiproxy.canonicalName}-app
+${shared.resource.name}@${apiproxy.name}.com:
+- name: ${shared.resource.name}-app
   apiProducts:
-  - ${apiproxy.canonicalName}-product
+  - ${shared.resource.name}-product
   scopes: []

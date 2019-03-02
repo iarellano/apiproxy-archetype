@@ -1,4 +1,4 @@
-# Global configuration
+# Global common configuration
 ---
 apigee:
   hosturl: ${managementApiProtocol}://${managementApiDomain}:${managementApiPort}
