@@ -14,8 +14,6 @@
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
-
-
         <main.basedir>${project.basedir}/../../..</main.basedir>
         <apigee.config.dir>${project.build.directory}/edge</apigee.config.dir>
         <apigee.test.config.dir>${project.build.directory}/test/edge</apigee.test.config.dir>
@@ -351,7 +349,6 @@
     </profiles>
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>it.ozimov</groupId>
