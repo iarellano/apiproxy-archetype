@@ -19,12 +19,6 @@
 
     <profiles>
         <profile>
-            <id>groovy</id>
-            <modules>
-                <module>src/main/gateway/${apiproxyName}</module>
-            </modules>
-        </profile>
-        <profile>
             <!-- Activate modules for test profile -->
             <id>test</id>
             <properties>
