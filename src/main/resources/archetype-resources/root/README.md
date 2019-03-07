@@ -46,6 +46,11 @@ $H$H$H Deploy API Proxy defined by test profile
 mvn -P test,deploy install
 ```
 
+$H$H$H Deploy resources that depend on API Proxy
+```bash
+mvn -P test,post-deploy install
+```
+
 $H$H$H Run integration testing on API Proxy deployed by test profile
 ```bash
 mvn -P test,integration verify

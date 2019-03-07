@@ -18,7 +18,10 @@
 
         <main.basedir>${project.basedir}/../../..</main.basedir>
         <apigee.config.dir>${project.build.directory}/edge</apigee.config.dir>
-        <apigee.config.exportDir>${project.build.directory}</apigee.config.exportDir>
+        <apigee.test.config.dir>${project.build.directory}/test/edge</apigee.test.config.dir>
+        <apigee.test.export.dir>${project.build.directory}</apigee.test.export.dir>
+
+        <fail.missing.deployed.revision>false</fail.missing.deployed.revision>
 
         <deployment.suffix>-${user.name}</deployment.suffix>
         <resource.suffix></resource.suffix> <!-- computed as ${deployment.suffix}-rev${apiproxy.revision} -->
@@ -75,108 +78,6 @@
                 <apigee.profile>prod</apigee.profile>
             </properties>
         </profile>
-        <profile>
-            <id>integration</id>
-            <properties>
-                <integrationProfileActivated>true</integrationProfileActivated>
-                <apigee.config.options>update</apigee.config.options>
-                <api.testtag>@apiproxy</api.testtag>
-            </properties>
-            <build>
-                <plugins>
-                    <!-- deploy apiproducts, developers, and developerApps -->
-                    <plugin>
-                        <groupId>com.apigee.edge.config</groupId>
-                        <artifactId>apigee-config-maven-plugin</artifactId>
-                        <version>${apigee-config-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>create-config-apiproduct</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>apiproducts</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>create-config-developer</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>developers</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>create-config-app</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>apps</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>export-api-keys</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>exportAppKeys</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>delete-config-app</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>apps</goal>
-                                </goals>
-                                <configuration>
-                                    <options>delete</options>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>delete-config-developer</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>developers</goal>
-                                </goals>
-                                <configuration>
-                                    <options>delete</options>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>delete-config-apiproduct</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>apiproducts</goal>
-                                </goals>
-                                <configuration>
-                                    <options>delete</options>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!-- run integration tests -->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>${exec-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>run-integration-testing</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <executable>node</executable>
-                                    <workingDirectory>${main.basedir}</workingDirectory>
-                                    <commandlineArgs>
-                                        ./node_modules/cucumber/bin/cucumber.js ${project.build.directory}/test/integration/features --tags ${api.testtag}
-                                    </commandlineArgs>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
         <profile>
             <id>deploy</id>
             <properties>
@@ -274,9 +175,180 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>post-deploy</id>
+            <properties>
+                <fail.missing.deployed.revision>true</fail.missing.deployed.revision>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.apigee.edge.config</groupId>
+                        <artifactId>apigee-config-maven-plugin</artifactId>
+                        <version>${apigee-config-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>create-config-apiproduct</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>apiproducts</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-developer</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>developers</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-app</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>apps</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>integration</id>
+            <properties>
+                <integrationProfileActivated>true</integrationProfileActivated>
+                <apigee.config.options>update</apigee.config.options>
+                <api.testtag>@apiproxy</api.testtag>
+                <apigee.config.dir>${apigee.test.config.dir}</apigee.config.dir>
+                <apigee.config.exportDir>${apigee.test.export.dir}</apigee.config.exportDir>
+                <fail.missing.deployed.revision>true</fail.missing.deployed.revision>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.iarellano</groupId>
+                        <artifactId>iad-j2y2j-converter-maven-plugin</artifactId>
+                        <version>${iad.j2y2j.converter.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>copy-edge-configs</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>yaml-2-json</goal>
+                                </goals>
+                                <configuration>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.basedir}/test/edge</directory>
+                                            <filtering>true</filtering>
+                                            <includes>
+                                                <include>api/**/*.yaml</include>
+                                                <include>env/${apigee.env}/*.yaml</include>
+                                                <include>org/*.yaml</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                    <outputDirectory>${project.build.directory}/test/edge</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- deploy apiproducts, developers, and developerApps -->
+                    <plugin>
+                        <groupId>com.apigee.edge.config</groupId>
+                        <artifactId>apigee-config-maven-plugin</artifactId>
+                        <version>${apigee-config-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>create-config-apiproduct</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>apiproducts</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-developer</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>developers</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>create-config-app</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>apps</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>export-api-keys</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>exportAppKeys</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>delete-config-app</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>apps</goal>
+                                </goals>
+                                <configuration>
+                                    <options>delete</options>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>delete-config-developer</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>developers</goal>
+                                </goals>
+                                <configuration>
+                                    <options>delete</options>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>delete-config-apiproduct</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>apiproducts</goal>
+                                </goals>
+                                <configuration>
+                                    <options>delete</options>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- run integration tests -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>${exec-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>run-integration-testing</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>node</executable>
+                                    <workingDirectory>${main.basedir}</workingDirectory>
+                                    <commandlineArgs>
+                                        ./node_modules/cucumber/bin/cucumber.js ${project.build.directory}/test/integration/features --tags ${api.testtag}
+                                    </commandlineArgs>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
-
-
 
     <build>
 

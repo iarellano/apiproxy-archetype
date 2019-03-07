@@ -2,8 +2,8 @@
     "parameters": {
         "domain": "${northbound.domain}",
         "basepath": "${northbound.basePath}${deployment.suffix}",
-        "${shared.resource.name}-app": {
-            "name": "${shared.resource.name}-app",
+        "${shared.resource.name}-test-app": {
+            "name": "${shared.resource.name}-test-app",
             "clientId": "",
             "clientSecret": ""
         }

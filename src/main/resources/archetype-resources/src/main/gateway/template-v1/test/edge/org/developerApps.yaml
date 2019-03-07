@@ -1,0 +1,6 @@
+---
+${shared.resource.name}@${apiproxy.name}-test.com:
+- name: ${shared.resource.name}-test-app
+  apiProducts:
+  - ${shared.resource.name}-test-product
+  scopes: []

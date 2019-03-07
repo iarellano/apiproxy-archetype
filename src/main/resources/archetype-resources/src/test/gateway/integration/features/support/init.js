@@ -4,7 +4,7 @@
 var apickli    = require('apickli');
 var config     = require('../../config.json');
 var devAppKeys = require('../../../../devAppKeys.json');
-var devApps    = require('../../../../edge/org/developerApps.json');
+var devApps    = require('../../../../test/edge/org/developerApps.json');
 
 for (var developer in devApps) {
     console.log("Developer: " + developer);

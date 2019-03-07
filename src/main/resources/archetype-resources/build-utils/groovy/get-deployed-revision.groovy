@@ -20,7 +20,7 @@ def serverProfile = profile.getProfile(project)
 def restUtil = new RestUtil();
 def deployedRevision = restUtil.getDeployedRevision(serverProfile)
 
-if ("".equals(deployedRevision)) {
+if ("".equals(deployedRevision) && "true".equals(project.getProperties().get("fail.missing.deployed.revision"))) {
     throw new IllegalStateException("There is no deployed revision of API Proxy '" + serverProfile.getApplication() + "' on environment '" + serverProfile.getEnvironment() + "' to run integration testing.")
 }
 

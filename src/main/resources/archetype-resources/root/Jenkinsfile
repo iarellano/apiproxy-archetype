@@ -1,0 +1,15 @@
+pipeline {
+    agent {
+
+    }
+    stages {
+        stage("Cloning code"){
+        }
+        stage("Unit testing") {
+        }
+        stage("Deploy") {
+        }
+        stage("Integration testing") {
+        }
+    }
+}
