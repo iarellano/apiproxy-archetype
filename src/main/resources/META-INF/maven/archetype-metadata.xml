@@ -3,6 +3,9 @@
 
     <requiredProperties>
 
+        <requiredProperty key="spec">
+
+        </requiredProperty>
         <!-- management api -->
         <requiredProperty key="managementApiDomain">
             <defaultValue>api.enterprise.apigee.com</defaultValue>
